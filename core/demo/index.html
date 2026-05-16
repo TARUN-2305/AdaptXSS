@@ -150,14 +150,22 @@
   let alertThreshold = 0.6;
   let sessionStats = { total: 0, alerts: 0, latencies: [] };
 
+  const BACKEND = 'http://localhost:4000';
+
   function initMonitor() {
     monitor = new AdaptXSS.AdaptXSSObserver({
       threshold: alertThreshold,
+      endpoint:  `${BACKEND}/api/report`,
       onAlert: (evt) => handleAlert(evt)
     });
     monitor.attach(document.getElementById('target'));
     document.getElementById('sessionId').textContent = monitor.sessionId;
     addLog('info', `Observer attached — Session: ${monitor.sessionId.substring(0,20)}…`);
+    // Verify backend reachability
+    fetch(`${BACKEND}/health`)
+      .then(r => r.json())
+      .then(() => addLog('info', '✅ Backend connected at ' + BACKEND))
+      .catch(() => addLog('info', '⚠️ Backend offline — events logged locally only'));
   }
 
   // Override getStats to track manually too
@@ -200,7 +208,7 @@
   function updateThreshold(val) {
     alertThreshold = parseFloat(val);
     document.getElementById('thresholdVal').textContent = alertThreshold.toFixed(2);
-    if (monitor) monitor.threshold = alertThreshold;
+    if (monitor) monitor.threshold = alertThreshold; // live update
   }
 
   // ── Stats ─────────────────────────────────────────────────────────────────
