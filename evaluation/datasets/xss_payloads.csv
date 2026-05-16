@@ -1,0 +1,41 @@
+payload,label
+"<script>alert(1)</script>",1
+"<img src=x onerror=alert(1)>",1
+"<a href=""javascript:alert(1)"">Click here</a>",1
+"<svg onload=alert(1)>",1
+"<iframe src=""javascript:alert(1)""></iframe>",1
+"<body onload=alert(1)>",1
+"<math><maction actiontype=""statusline#http://google.com"" xlink:href=""javascript:alert(1)"">CLICKME</maction></math>",1
+"<object data=""data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==""></object>",1
+"<embed src=""data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==""></embed>",1
+"<script>eval(atob(""YWxlcnQoMSk=""))</script>",1
+"<img src=""data:image/png;base64,iVBORw0KGgo="" onload=""alert(1)"">",1
+"<link rel=""stylesheet"" href=""javascript:alert(1)"">",1
+"<meta http-equiv=""refresh"" content=""0;url=javascript:alert(1)"">",1
+"<base href=""javascript:alert(1)//"">",1
+"<form action=""javascript:alert(1)""><input type=submit></form>",1
+"<button formaction=""javascript:alert(1)"">X</button>",1
+"<input type=""image"" src=""x"" onerror=""alert(1)"">",1
+"<video poster=""javascript:alert(1)""></video>",1
+"<audio src=""x"" onerror=""alert(1)""></audio>",1
+"<source src=""javascript:alert(1)"">",1
+"<div>Hello World</div>",0
+"<p>This is a benign string.</p>",0
+"<img src=""logo.png"" alt=""Logo"">",0
+"<a href=""https://google.com"">Google</a>",0
+"<span class=""text-bold"">Bold Text</span>",0
+"<ul><li>Item 1</li><li>Item 2</li></ul>",0
+"<button type=""button"" class=""btn"">Submit</button>",0
+"<form action=""/login"" method=""POST""><input type=""text"" name=""user""></form>",0
+"<iframe src=""https://youtube.com/embed/123""></iframe>",0
+"<link rel=""stylesheet"" href=""/style.css"">",0
+"<meta name=""description"" content=""A web page"">",0
+"<script src=""/app.js""></script>",0
+"<h1>Welcome to our site</h1>",0
+"<nav><ul><li>Home</li></ul></nav>",0
+"<div id=""app"" data-v=""123""></div>",0
+"<input type=""password"" placeholder=""Password"">",0
+"<svg viewBox=""0 0 100 100""><circle cx=""50"" cy=""50"" r=""40"" /></svg>",0
+"<video src=""movie.mp4"" controls></video>",0
+"<audio src=""song.mp3"" controls></audio>",0
+"<a href=""mailto:test@example.com"">Email us</a>",0

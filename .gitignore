@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Dist (keep seed model, exclude map files)
+core/dist/*.map
+
+# Environment files
+.env
+*.env.local
+
+# Django
+adaptxss_admin/db.sqlite3
+adaptxss_admin/__pycache__/
+adaptxss_admin/*/migrations/__pycache__/
+
+# PHP store data
+php-receiver/store/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Logs
+*.log
+npm-debug.log*

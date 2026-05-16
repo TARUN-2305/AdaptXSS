@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdaptXSS — Live Demo</title>
+  <script src="../dist/adaptxss.min.js"></script>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #1a1a1a;
+      --border: #2a2a2a;
+      --accent: #f97316;
+      --red: #ef4444;
+      --green: #22c55e;
+      --text: #e2e8f0;
+      --muted: #888;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Courier New', monospace; background: var(--bg); color: var(--text); min-height: 100vh; padding: 2rem; }
+    h1 { font-size: 1.6rem; color: var(--accent); margin-bottom: 0.25rem; letter-spacing: 0.05em; }
+    .subtitle { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; }
+    .card h2 { font-size: 0.9rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.8rem; }
+    label { font-size: 0.85rem; color: var(--muted); display: block; margin-bottom: 0.4rem; }
+    input[type="text"] {
+      width: 100%; padding: 0.6rem 0.8rem; background: #111; border: 1px solid var(--border);
+      border-radius: 6px; color: var(--text); font-family: monospace; font-size: 0.9rem;
+    }
+    input:focus { outline: none; border-color: var(--accent); }
+    .btn-row { display: flex; gap: 0.75rem; margin-top: 0.8rem; flex-wrap: wrap; }
+    button {
+      padding: 0.5rem 1.1rem; border: none; border-radius: 6px; cursor: pointer;
+      font-family: monospace; font-weight: bold; font-size: 0.85rem; transition: opacity 0.15s;
+    }
+    button:hover { opacity: 0.85; }
+    .btn-inject { background: var(--red); color: #fff; }
+    .btn-clear  { background: #333; color: var(--text); }
+    .btn-benign { background: var(--green); color: #fff; }
+    .stats { display: flex; gap: 1.5rem; }
+    .stat { text-align: center; }
+    .stat-val { font-size: 1.8rem; font-weight: bold; }
+    .stat-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; }
+    #target {
+      min-height: 60px; padding: 0.8rem; background: #111; border: 1px dashed #333;
+      border-radius: 6px; font-size: 0.85rem; color: #aaa; word-break: break-all;
+    }
+    #log { max-height: 260px; overflow-y: auto; display: flex; flex-direction: column-reverse; gap: 0.3rem; }
+    .log-entry {
+      padding: 0.4rem 0.7rem; border-radius: 4px; font-size: 0.8rem;
+      border-left: 3px solid transparent; animation: fadeIn 0.2s ease-in;
+    }
+    .log-entry.alert  { background: rgba(239,68,68,0.12); border-color: var(--red); }
+    .log-entry.benign { background: rgba(34,197,94,0.08); border-color: var(--green); }
+    .log-entry.info   { background: rgba(249,115,22,0.08); border-color: var(--accent); color: var(--muted); }
+    .badge { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.75rem; font-weight: bold; margin-right: 0.3rem; }
+    .badge-mal { background: rgba(239,68,68,0.25); color: var(--red); }
+    .badge-ben { background: rgba(34,197,94,0.25); color: var(--green); }
+    @keyframes fadeIn { from { opacity:0; transform: translateY(-4px); } to { opacity:1; transform: none; } }
+    .quick-payloads { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+    .qp-btn {
+      background: #222; border: 1px solid #333; color: var(--muted); padding: 0.2rem 0.6rem;
+      border-radius: 4px; font-size: 0.75rem; cursor: pointer; font-family: monospace;
+    }
+    .qp-btn:hover { border-color: var(--accent); color: var(--text); }
+    .threshold-row { display: flex; align-items: center; gap: 0.8rem; margin-top: 0.6rem; }
+    #thresholdVal { color: var(--accent); font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<h1>⚡ AdaptXSS — Live Demo</h1>
+<p class="subtitle">Adaptive DOM-Based XSS Detection · MutationObserver + Online Naive Bayes · &lt;10 KB</p>
+
+<div class="grid">
+  <!-- Inject Panel -->
+  <div class="card">
+    <h2>Inject Payload</h2>
+    <label for="payload">XSS payload or HTML to inject:</label>
+    <input id="payload" type="text" placeholder='Try: <img onerror="alert(1)" src=x>' value='<script>alert(1)</script>'>
+    <div class="btn-row">
+      <button class="btn-inject" onclick="inject()">⚠ Inject</button>
+      <button class="btn-benign" onclick="injectBenign()">✓ Inject Benign</button>
+      <button class="btn-clear" onclick="clearTarget()">✕ Clear</button>
+    </div>
+    <div class="threshold-row">
+      <label style="margin:0">Alert Threshold:</label>
+      <input type="range" id="threshold" min="0.1" max="0.99" step="0.01" value="0.6"
+             oninput="updateThreshold(this.value)" style="flex:1">
+      <span id="thresholdVal">0.60</span>
+    </div>
+    <div class="quick-payloads">
+      <span style="font-size:0.75rem;color:var(--muted);align-self:center">Quick:</span>
+      <button class="qp-btn" onclick="setPayload('<img onerror=alert(1) src=x>')">img onerror</button>
+      <button class="qp-btn" onclick="setPayload('<a href=javascript:alert(1)>click</a>')">js: href</button>
+      <button class="qp-btn" onclick="setPayload('<svg onload=alert(1)>')">svg onload</button>
+      <button class="qp-btn" onclick="setPayload('<iframe src=javascript:void(0)>')">iframe js</button>
+      <button class="qp-btn" onclick="setPayload('<div>Hello World</div>')">benign div</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="card">
+    <h2>Session Statistics</h2>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-val" id="statTotal">0</div>
+        <div class="stat-label">Total</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="statAlerts" style="color:var(--red)">0</div>
+        <div class="stat-label">Alerts</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="statAvgLat">0</div>
+        <div class="stat-label">Avg ms</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="statP99Lat">0</div>
+        <div class="stat-label">P99 ms</div>
+      </div>
+    </div>
+    <div style="margin-top:1rem">
+      <div class="stat-label" style="margin-bottom:0.4rem">Session ID</div>
+      <div id="sessionId" style="font-size:0.75rem;color:var(--muted);word-break:break-all">Initializing...</div>
+    </div>
+  </div>
+</div>
+
+<!-- DOM Target -->
+<div class="card" style="margin-bottom:1rem">
+  <h2>DOM Target — Monitored Zone</h2>
+  <div id="target" aria-label="injection-target">
+    <span style="color:#555">← Injected content appears here. This element is monitored.</span>
+  </div>
+</div>
+
+<!-- Log -->
+<div class="card">
+  <h2>Event Log</h2>
+  <div id="log">
+    <div class="log-entry info">🟠 AdaptXSS observer starting…</div>
+  </div>
+</div>
+
+<script>
+  // ── Init ──────────────────────────────────────────────────────────────────
+  let monitor;
+  let alertThreshold = 0.6;
+  let sessionStats = { total: 0, alerts: 0, latencies: [] };
+
+  function initMonitor() {
+    monitor = new AdaptXSS.AdaptXSSObserver({
+      threshold: alertThreshold,
+      onAlert: (evt) => handleAlert(evt)
+    });
+    monitor.attach(document.getElementById('target'));
+    document.getElementById('sessionId').textContent = monitor.sessionId;
+    addLog('info', `Observer attached — Session: ${monitor.sessionId.substring(0,20)}…`);
+  }
+
+  // Override getStats to track manually too
+  function handleAlert(evt) {
+    sessionStats.alerts++;
+    sessionStats.latencies.push(evt.latencyMs);
+    updateStats(evt);
+    addLog('alert',
+      `<span class="badge badge-mal">MALICIOUS</span>` +
+      `prob=${evt.probability.toFixed(4)} | lat=${evt.latencyMs.toFixed(2)}ms | ` +
+      `f=[${evt.features.map(f=>f.toFixed(2)).join(', ')}]`
+    );
+  }
+
+  // ── Actions ───────────────────────────────────────────────────────────────
+  function inject() {
+    const p = document.getElementById('payload').value.trim();
+    if (!p) return;
+    sessionStats.total++;
+    document.getElementById('target').innerHTML = p;
+    updateStats();
+  }
+
+  function injectBenign() {
+    const benign = '<div class="safe">Hello, <strong>World</strong>! This is a safe paragraph.</div>';
+    sessionStats.total++;
+    document.getElementById('target').innerHTML = benign;
+    addLog('benign', '<span class="badge badge-ben">BENIGN</span>Safe content injected.');
+    updateStats();
+  }
+
+  function clearTarget() {
+    document.getElementById('target').innerHTML = '<span style="color:#555">← Injection area cleared.</span>';
+  }
+
+  function setPayload(p) {
+    document.getElementById('payload').value = p;
+  }
+
+  function updateThreshold(val) {
+    alertThreshold = parseFloat(val);
+    document.getElementById('thresholdVal').textContent = alertThreshold.toFixed(2);
+    if (monitor) monitor.threshold = alertThreshold;
+  }
+
+  // ── Stats ─────────────────────────────────────────────────────────────────
+  function updateStats() {
+    document.getElementById('statTotal').textContent  = sessionStats.total;
+    document.getElementById('statAlerts').textContent = sessionStats.alerts;
+    const lats = sessionStats.latencies;
+    if (lats.length) {
+      const avg = lats.reduce((a,b)=>a+b,0)/lats.length;
+      const p99 = [...lats].sort((a,b)=>a-b)[Math.floor(lats.length*0.99)] || lats[lats.length-1];
+      document.getElementById('statAvgLat').textContent = avg.toFixed(2);
+      document.getElementById('statP99Lat').textContent = p99.toFixed(2);
+    }
+  }
+
+  // ── Log ───────────────────────────────────────────────────────────────────
+  function addLog(type, msg) {
+    const log = document.getElementById('log');
+    const div = document.createElement('div');
+    div.className = `log-entry ${type}`;
+    const ts = new Date().toLocaleTimeString('en-US', { hour12: false, fractionalSecondDigits: 3 });
+    div.innerHTML = `<span style="color:var(--muted)">[${ts}]</span> ${msg}`;
+    log.prepend(div);
+    // Keep max 100 entries
+    while (log.children.length > 100) log.removeChild(log.lastChild);
+  }
+
+  // ── Enter key shortcut ────────────────────────────────────────────────────
+  document.getElementById('payload').addEventListener('keydown', e => {
+    if (e.key === 'Enter') inject();
+  });
+
+  // ── Boot ─────────────────────────────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', initMonitor);
+</script>
+</body>
+</html>

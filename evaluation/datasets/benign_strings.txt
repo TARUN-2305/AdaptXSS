@@ -1,0 +1,20 @@
+<div>Hello World</div>
+<p>This is a benign string.</p>
+<img src="logo.png" alt="Logo">
+<a href="https://google.com">Google</a>
+<span class="text-bold">Bold Text</span>
+<ul><li>Item 1</li><li>Item 2</li></ul>
+<button type="button" class="btn">Submit</button>
+<form action="/login" method="POST"><input type="text" name="user"></form>
+<iframe src="https://youtube.com/embed/123"></iframe>
+<link rel="stylesheet" href="/style.css">
+<meta name="description" content="A web page">
+<script src="/app.js"></script>
+<h1>Welcome to our site</h1>
+<nav><ul><li>Home</li></ul></nav>
+<div id="app" data-v="123"></div>
+<input type="password" placeholder="Password">
+<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" /></svg>
+<video src="movie.mp4" controls></video>
+<audio src="song.mp3" controls></audio>
+<a href="mailto:test@example.com">Email us</a>

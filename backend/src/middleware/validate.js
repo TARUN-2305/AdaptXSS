@@ -1,0 +1,16 @@
+import { body, validationResult } from 'express-validator';
+
+export const validateEvent = [
+  body('timestamp').isInt({ min: 0 }),
+  body('sessionId').isString().matches(/^sess_[a-z0-9_]+$/),
+  body('label').isIn(['malicious', 'benign']),
+  body('probability').isFloat({ min: 0, max: 1 }),
+  body('features').isArray({ min: 8, max: 8 }),
+  body('features.*').isFloat({ min: 0, max: 1 }),
+  body('latencyMs').isFloat({ min: 0 }),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+    next();
+  }
+];
