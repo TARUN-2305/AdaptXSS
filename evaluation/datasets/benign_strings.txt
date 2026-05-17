@@ -18,3 +18,33 @@
 <video src="movie.mp4" controls></video>
 <audio src="song.mp3" controls></audio>
 <a href="mailto:test@example.com">Email us</a>
+<div class="container"><p>Welcome!</p></div>
+<header><nav><ul><li><a href="/home">Home</a></li></ul></nav></header>
+<footer><p>&copy; 2026 Example Corp</p></footer>
+<table><thead><tr><th>Name</th><th>Age</th></tr></thead><tbody><tr><td>Alice</td><td>30</td></tr></tbody></table>
+<form action="/submit" method="POST"><input type="text" name="name" placeholder="Your name"><button type="submit">Submit</button></form>
+<img src="https://example.com/photo.jpg" alt="A photo" width="300">
+<video src="https://example.com/video.mp4" controls width="640"></video>
+<audio src="https://example.com/audio.mp3" controls></audio>
+<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0"></iframe>
+<link rel="stylesheet" href="https://cdn.example.com/style.css">
+<script src="https://cdn.example.com/app.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<input type="email" name="email" placeholder="email@example.com" required>
+<select name="country"><option value="us">United States</option><option value="in">India</option></select>
+<textarea name="message" rows="4" cols="50">Type your message here</textarea>
+<label for="name">Full Name:</label><input id="name" type="text" name="name">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="blue"/></svg>
+<canvas id="myCanvas" width="200" height="100"></canvas>
+<details><summary>More info</summary><p>Here is the additional information.</p></details>
+<blockquote cite="https://example.com"><p>This is a quote.</p></blockquote>
+<figure><img src="diagram.png" alt="Architecture diagram"><figcaption>Figure 1: System Overview</figcaption></figure>
+<article><h2>Blog Post Title</h2><p>Post content goes here.</p></article>
+<section id="about"><h2>About Us</h2><p>We build great software.</p></section>
+<aside><h3>Related Articles</h3><ul><li>Article 1</li><li>Article 2</li></ul></aside>
+<button type="button" class="btn btn-primary" id="submitBtn">Save Changes</button>
+<div data-component="carousel" data-interval="3000" class="carousel"></div>
+<template id="row-template"><tr><td class="name"></td><td class="value"></td></tr></template>
+<slot name="content"><p>Default content</p></slot>
+<picture><source media="(max-width: 640px)" srcset="small.jpg"><img src="large.jpg" alt="Responsive image"></picture>
+<object data="document.pdf" type="application/pdf" width="600" height="400"></object>

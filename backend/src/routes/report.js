@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { validateEvent } from '../middleware/validate.js';
 import { addEvent, getAll, getBySession, getStats } from '../store/memory.js';
-import { exportModelAsXML } from '../../../../core/src/xmlExporter.js';
+import { exportModelAsXML } from '../utils/xmlExporter.js';
 
 const router = Router();
 
@@ -27,6 +27,7 @@ router.get('/export', (req, res) => {
   res.json(getAll());
 });
 
+// GET /api/model-xml — reconstruct model state from stored events, export as XML
 router.get('/model-xml', (req, res) => {
   const events = getAll();
   const classifierState = {
@@ -36,6 +37,8 @@ router.get('/model-xml', (req, res) => {
     version: 1
   };
   for (const e of events) {
+    if (!Array.isArray(e.features) || e.features.length !== 8) continue;
+    if (!['malicious', 'benign'].includes(e.label)) continue;
     classifierState.totalSamples++;
     classifierState.classCounts[e.label]++;
     for (let i = 0; i < 8; i++) {

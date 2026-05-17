@@ -10,7 +10,7 @@
 | Field | Detail |
 |---|---|
 | Full Name | AdaptXSS — Adaptive DOM-Based XSS Detection |
-| Tech Stack | Vanilla JS (core library) · React 18 (dashboard) · Node.js + Express (aggregation server) · PHP 8 (fallback receiver) · Python 3.11 (evaluation notebook) |
+| Tech Stack | Vanilla JS (core library) · React 19 (dashboard) · Node.js + Express (aggregation server) · PHP 8 (fallback receiver) · Python 3.11 (evaluation notebook) |
 | Repository Structure | Monorepo with 5 subfolders |
 | Total Estimated Duration | 8 weeks (solo freelancer), 5 weeks (2-person team) |
 | Target Publication | IEEE ICWS / ACM WWW Security Track |
@@ -44,7 +44,7 @@ adaptxss/
 │   │       └── validate.js
 │   ├── .env.example
 │   └── package.json
-├── dashboard/             # Phase 4 — React 18
+├── dashboard/             # Phase 4 — React 19
 │   ├── src/
 │   │   ├── App.jsx
 │   │   ├── components/

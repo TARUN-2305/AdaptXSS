@@ -155,7 +155,7 @@
   function initMonitor() {
     monitor = new AdaptXSS.AdaptXSSObserver({
       threshold: alertThreshold,
-      endpoint:  `${BACKEND}/api/report`,
+      reportUrl: `${BACKEND}/api/report`,
       onAlert: (evt) => handleAlert(evt)
     });
     monitor.attach(document.getElementById('target'));

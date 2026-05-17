@@ -1,21 +1,37 @@
-import { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 export function useEvents(baseUrl, pollIntervalMs = 2000) {
-  const [events, setEvents] = useState([]);
-  const [stats, setStats]   = useState({ total: 0, malicious: 0, benign: 0, sessions: 0 });
+  const [events, setEvents]   = useState([]);
+  const [stats, setStats]     = useState({ total: 0, malicious: 0, benign: 0, sessions: 0, avgLatencyMs: 0, p99LatencyMs: 0 });
   const [loading, setLoading] = useState(true);
+  const [error, setError]     = useState(null);
+  const controllerRef         = useRef(null);
 
   const fetchData = useCallback(async () => {
+    // Abort any in-flight request before starting a new one
+    if (controllerRef.current) controllerRef.current.abort();
+    controllerRef.current = new AbortController();
+    const signal = controllerRef.current.signal;
+
     try {
       const [evtsRes, statsRes] = await Promise.all([
-        axios.get(`${baseUrl}/api/events?limit=200`),
-        axios.get(`${baseUrl}/api/stats`)
+        fetch(`${baseUrl}/api/events?limit=200`, { signal }),
+        fetch(`${baseUrl}/api/stats`,            { signal })
       ]);
-      setEvents(evtsRes.data);
-      setStats(statsRes.data);
+
+      if (!evtsRes.ok || !statsRes.ok) throw new Error('Server error');
+
+      const [evtsData, statsData] = await Promise.all([
+        evtsRes.json(),
+        statsRes.json()
+      ]);
+
+      setEvents(evtsData);
+      setStats(statsData);
+      setError(null);
     } catch (err) {
-      console.error('[AdaptXSS Dashboard] Fetch error:', err.message);
+      if (err.name === 'AbortError') return;  // Ignore aborted requests
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -24,8 +40,11 @@ export function useEvents(baseUrl, pollIntervalMs = 2000) {
   useEffect(() => {
     fetchData();
     const interval = setInterval(fetchData, pollIntervalMs);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (controllerRef.current) controllerRef.current.abort();
+    };
   }, [fetchData, pollIntervalMs]);
 
-  return { events, stats, loading };
+  return { events, stats, loading, error };
 }

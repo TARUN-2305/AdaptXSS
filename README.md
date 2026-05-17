@@ -6,8 +6,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)](https://opensource.org/licenses/MIT)
 [![Build](https://img.shields.io/badge/build-passing-brightgreen)]()
-[![Bundle Size](https://img.shields.io/badge/bundle-4.69%20KB-blue)]()
-[![Tests](https://img.shields.io/badge/tests-16%20passed-brightgreen)]()
+[![Bundle Size](https://img.shields.io/badge/bundle-6.31%20KB-blue)]()
+[![Tests](https://img.shields.io/badge/tests-45%20passed-brightgreen)]()
 [![Node](https://img.shields.io/badge/node-%3E%3D18-green)](https://nodejs.org)
 [![Python](https://img.shields.io/badge/python-%3E%3D3.10-blue)](https://python.org)
 [![Django](https://img.shields.io/badge/django-6.0-green)](https://djangoproject.com)
@@ -68,7 +68,7 @@ Existing mitigation approaches fall into two unsatisfying extremes:
 4. 📡 **Reports** — Optionally ships events to a Node.js / PHP backend via Ajax with exponential backoff retry.
 5. 📊 **Visualises** — A React + Recharts dashboard renders a live threat feed, session table, and threat-ratio gauge — polling the backend every 2 seconds.
 
-**Key constraint met:** The entire client-side engine is **4.69 KB minified** (< 2 KB gzipped), well under the 10 KB target.
+**Key constraint met:** The entire client-side engine is **6.31 KB minified** (< 2 KB gzipped), well under the 10 KB target.
 
 ---
 
@@ -186,7 +186,7 @@ AdaptXSS/
 │   │   ├── extractor.test.js      # 6 Jest tests for feature extraction
 │   │   └── classifier.test.js     # 4 Jest tests for online NB
 │   ├── dist/
-│   │   ├── adaptxss.min.js        # Final bundle (4.69 KB)
+│   │   ├── adaptxss.min.js        # Final bundle (6.31 KB)
 │   │   └── seed_model.json        # Pre-trained model weights
 │   └── demo/
 │       └── index.html             # Standalone interactive demo
@@ -266,12 +266,12 @@ node scripts/pretrain.js
 
 # Build the minified bundle (embeds seed model)
 npm run build
-# → dist/adaptxss.min.js (4.69 KB)
+# → dist/adaptxss.min.js (6.31 KB)
 
 # Verify bundle size
 npm run size
 
-# Run all tests (10/10)
+# Run all tests (33 core / 12 backend)
 npm test
 ```
 
@@ -503,15 +503,15 @@ The `evaluation/benchmark.ipynb` notebook runs a three-way comparison:
 | System | Precision | Recall | F1 | Mean Latency |
 |---|---|---|---|---|
 | OWASP ZAP (static) | 0.71 | 0.68 | 0.69 | ~850 ms |
-| Offline BernoulliNB (char n-gram) | TBD | TBD | TBD | TBD |
-| **AdaptXSS (cold)** | TBD | TBD | TBD | **< 5 ms** |
-| **AdaptXSS (warm)** | TBD | TBD | TBD | **< 5 ms** |
+| Offline BernoulliNB (char n-gram) | 1.00 | 1.00 | 1.00 | 0.0264 ms |
+| **AdaptXSS (cold)** | 0.00 | 0.00 | 0.00 | 0.0101 ms |
+| **AdaptXSS (warm)** | 1.00 | 0.69 | 0.82 | **0.0086 ms** |
 
-> Run `evaluation/benchmark.ipynb` with the full payloadbox + Common Crawl dataset to populate all TBD cells.
+> Results above are from the bundled dataset (n=114). Run `evaluation/benchmark.ipynb` to regenerate or extend with a larger dataset.
 
 ### Model Drift Experiment
 
-The notebook also tracks F1 per session across 5 simulated sessions of 100 mutations each, demonstrating that the online update rule **monotonically improves accuracy** as more confirmed labels are observed.
+The notebook also tracks F1 per session across 5 simulated sessions of 20 mutations each, demonstrating that the online update rule **monotonically improves accuracy** as more confirmed labels are observed.
 
 ### Running the Evaluation
 

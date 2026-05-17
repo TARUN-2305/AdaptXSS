@@ -1,0 +1,30 @@
+{
+  "Offline BNB": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "latency_ms": 0.026360802028490147,
+    "model_size": "~1 MB (sklearn)"
+  },
+  "AdaptXSS (cold)": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "latency_ms": 0.010102739135776495,
+    "model_size": "< 10 KB"
+  },
+  "AdaptXSS (warm)": {
+    "precision": 1.0,
+    "recall": 0.6923076923076923,
+    "f1": 0.8181818181818182,
+    "latency_ms": 0.008606043489516711,
+    "model_size": "< 10 KB"
+  },
+  "OWASP ZAP (static)": {
+    "precision": 0.71,
+    "recall": 0.68,
+    "f1": 0.69,
+    "latency_ms": 850.0,
+    "model_size": "N/A"
+  }
+}

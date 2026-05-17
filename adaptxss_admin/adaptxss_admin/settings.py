@@ -130,3 +130,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "static/"
+
+# Suppress "No 'DEFAULT_AUTO_FIELD'" system check warnings
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Default credentials for development (shown in README)
+# To create: python manage.py createsuperuser
+# Dev shortcut: python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin','admin@example.com','admin1234') if not User.objects.filter(username='admin').exists() else None"

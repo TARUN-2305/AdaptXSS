@@ -1,34 +1,67 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
-export default function ModelStats({ stats }) {
+export default function ModelStats({ stats, backendUrl }) {
   const malPct = stats.total > 0 ? (stats.malicious / stats.total) * 100 : 0;
-  // Note: the original plan mentioned pulling latencies from events. 
-  // We'll just show the server stats and hardcode latencies to 0 if not provided
-  const avgLatency = stats.avgLatencyMs || 0;
-  const p99Latency = stats.p99LatencyMs || 0;
+  const avgLat = typeof stats.avgLatencyMs === 'number' ? stats.avgLatencyMs.toFixed(2) : '—';
+  const p99Lat = typeof stats.p99LatencyMs === 'number' ? stats.p99LatencyMs.toFixed(2) : '—';
+
+  function downloadXML() {
+    window.open(`${backendUrl}/api/model-xml`, '_blank');
+  }
+
+  function downloadJSON() {
+    window.open(`${backendUrl}/api/export`, '_blank');
+  }
 
   return (
-    <div style={{ background: '#1a1a1a', padding: '1rem', borderRadius: '8px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-      <h2 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Global Statistics</h2>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div>
-          <div style={{ fontSize: '0.9rem', color: '#888' }}>Total Events</div>
-          <div style={{ fontSize: '1.5rem' }}>{stats.total.toLocaleString()}</div>
-        </div>
-        <div>
-          <div style={{ fontSize: '0.9rem', color: '#888' }}>Malicious %</div>
-          <div style={{ fontSize: '1.5rem', color: malPct > 0 ? '#ef4444' : '#e2e8f0' }}>{malPct.toFixed(1)}%</div>
-        </div>
-        <div>
-          <div style={{ fontSize: '0.9rem', color: '#888' }}>Active Sessions</div>
-          <div style={{ fontSize: '1.5rem' }}>{stats.sessions}</div>
-        </div>
-        <div>
-          <div style={{ fontSize: '0.9rem', color: '#888' }}>Safe Events</div>
-          <div style={{ fontSize: '1.5rem', color: '#22c55e' }}>{stats.benign.toLocaleString()}</div>
-        </div>
+    <div style={{
+      background: '#1a1a1a', padding: '1rem', borderRadius: '8px',
+      border: '1px solid #2a2a2a', display: 'flex', flexDirection: 'column'
+    }}>
+      <h2 style={{ fontSize: '0.85rem', color: '#666', textTransform: 'uppercase',
+                   letterSpacing: '0.1em', marginBottom: '0.8rem', margin: '0 0 0.8rem' }}>
+        Global Statistics
+      </h2>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem', flex: 1 }}>
+        <Stat label="Total Events"   value={stats.total.toLocaleString()} />
+        <Stat label="Malicious %"    value={`${malPct.toFixed(1)}%`}
+              valueColor={malPct > 0 ? '#ef4444' : '#e2e8f0'} />
+        <Stat label="Active Sessions" value={stats.sessions} />
+        <Stat label="Safe Events"    value={stats.benign.toLocaleString()} valueColor="#22c55e" />
+        <Stat label="Avg Latency"    value={`${avgLat} ms`} valueColor="#f97316" />
+        <Stat label="P99 Latency"    value={`${p99Lat} ms`} valueColor="#f97316" />
       </div>
-      <button onClick={() => window.open('http://localhost:4000/api/model-xml')} style={{ marginTop: '1rem', padding: '0.5rem', background: '#f97316', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>Export Rules as XML</button>
+
+      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.8rem', flexWrap: 'wrap' }}>
+        <button onClick={downloadXML} style={btnStyle('#f97316')}>
+          ↓ Export Rules (XML)
+        </button>
+        <button onClick={downloadJSON} style={btnStyle('#3b82f6')}>
+          ↓ Export Events (JSON)
+        </button>
+      </div>
     </div>
   );
+}
+
+function Stat({ label, value, valueColor }) {
+  return (
+    <div>
+      <div style={{ fontSize: '0.75rem', color: '#666', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        {label}
+      </div>
+      <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: valueColor || '#e2e8f0', lineHeight: 1.2 }}>
+        {value}
+      </div>
+    </div>
+  );
+}
+
+function btnStyle(bg) {
+  return {
+    padding: '0.4rem 0.8rem', background: bg, color: '#fff',
+    border: 'none', borderRadius: '4px', cursor: 'pointer',
+    fontFamily: 'monospace', fontWeight: 'bold', fontSize: '0.78rem'
+  };
 }

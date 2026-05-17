@@ -1,0 +1,13 @@
+{
+  "name": "adaptxss-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build:core":      "cd core && npm install && node scripts/pretrain.js && node scripts/build.js",
+    "start:backend":   "cd backend && npm install && node src/server.js",
+    "start:dashboard": "cd dashboard && npm install && npm run dev",
+    "test:core":       "cd core && npm test",
+    "test:backend":    "cd backend && npm test",
+    "test":            "npm run test:core && npm run test:backend"
+  }
+}
